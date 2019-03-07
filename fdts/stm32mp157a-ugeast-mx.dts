@@ -6,12 +6,15 @@
 
 /dts-v1/;
 #include <dt-bindings/clock/stm32mp1-clksrc.h>
+#include <dt-bindings/power/stm32mp1-power.h>
+
 #include "stm32mp15-mx.h"
 
 #include "stm32mp157c.dtsi"
 #include "stm32mp157cac-pinctrl.dtsi"
 #include "stm32mp15-ddr.dtsi"
 #include "stm32mp157c-security.dtsi"
+
 
 /* USER CODE BEGIN includes */
 /* USER CODE END includes */
@@ -41,7 +44,7 @@ clocks {
     clk_lse: clk-lse {
         /* USER CODE BEGIN clocks */
         /* USER CODE END clocks */
-        st,drive=<LSEDRV_LOWEST>;
+        st,drive=<LSEDRV_MEDIUM_HIGH>;
     };
     clk_hse: clk-hse {
         /* USER CODE BEGIN clocks */
@@ -106,6 +109,42 @@ clocks {
             bias-disable;
         };
     };
+    usart1_pins_mx: usart1_mx-0 {
+        pins1 {
+            pinmux = <STM32_PINMUX('B', 15, AF4)>; /* USART1_RX */
+            bias-disable;
+        };
+        pins2 {
+            pinmux = <STM32_PINMUX('B', 14, AF4)>; /* USART1_TX */
+            bias-disable;
+            drive-push-pull;
+            slew-rate = <0>;
+        };
+    };
+    usart3_pins_mx: usart3_mx-0 {
+        pins1 {
+            pinmux = <STM32_PINMUX('B', 12, AF8)>; /* USART3_RX */
+            bias-disable;
+        };
+        pins2 {
+            pinmux = <STM32_PINMUX('B', 10, AF7)>; /* USART3_TX */
+            bias-disable;
+            drive-push-pull;
+            slew-rate = <0>;
+        };
+    };
+    usart6_pins_mx: usart6_mx-0 {
+        pins1 {
+            pinmux = <STM32_PINMUX('C', 7, AF7)>; /* USART6_RX */
+            bias-disable;
+        };
+        pins2 {
+            pinmux = <STM32_PINMUX('C', 6, AF7)>; /* USART6_TX */
+            bias-disable;
+            drive-push-pull;
+            slew-rate = <0>;
+        };
+    };
 };
 
 &rcc {
@@ -117,7 +156,7 @@ clocks {
         CLK_AXI_PLL2P
         CLK_MCU_HSI
         CLK_PLL12_HSI
-        CLK_PLL3_HSE
+        CLK_PLL3_HSI
         CLK_PLL4_HSE
         CLK_RTC_LSE
         CLK_MCO1_DISABLED
@@ -131,7 +170,7 @@ clocks {
         0         /*APB2*/
         0         /*APB3*/
         1         /*APB4*/
-        2         /*APB5*/
+        1         /*APB5*/
         0         /*RTC*/
         0         /*MCO1*/
         0         /*MCO2*/
@@ -154,10 +193,10 @@ clocks {
         CLK_CEC_DISABLED
         CLK_I2C12_PCLK1
         CLK_I2C35_DISABLED
-        CLK_UART1_DISABLED
-        CLK_UART24_PCLK1
-        CLK_UART35_DISABLED
-        CLK_UART6_DISABLED
+        CLK_UART1_PCLK5
+        CLK_UART24_HSE
+        CLK_UART35_PCLK1
+        CLK_UART6_PCLK2
         CLK_UART78_DISABLED
         CLK_SPDIF_PLL4P
         CLK_FDCAN_HSE
@@ -170,13 +209,13 @@ clocks {
         CLK_LPTIM45_DISABLED
     >;
     pll1:st,pll@0 {
-        cfg = < 3 24 0 1 1 1>;
+        cfg = < 3 39 0 1 1 1>;
     };
     pll2:st,pll@1 {
-        cfg = < 3 24 1 0 0 7>;
+        cfg = < 3 32 1 0 0 7>;
     };
     pll4:st,pll@3 {
-        cfg = < 1 49 11 6 0 7>;
+        cfg = < 1 49 11 10 1 7>;
     };
 };
 
@@ -195,6 +234,16 @@ clocks {
 
     /* USER CODE BEGIN fmc */
     /* USER CODE END fmc */
+};
+
+&iwdg2{
+    status = "okay";
+    secure-status = "okay";
+
+    /* USER CODE BEGIN iwdg2 */
+    instance = <2>;
+    timeout-sec = <32>;
+    /* USER CODE END iwdg2 */
 };
 
 &rcc{
@@ -238,6 +287,42 @@ clocks {
     /* USER CODE END uart4 */
 };
 
+&usart1{
+    pinctrl-names = "default";
+    pinctrl-0 = <&usart1_pins_mx>;
+    status = "okay";
+
+    /* USER CODE BEGIN usart1 */
+    /* USER CODE END usart1 */
+};
+
+&usart3{
+    pinctrl-names = "default";
+    pinctrl-0 = <&usart3_pins_mx>;
+    status = "okay";
+
+    /* USER CODE BEGIN usart3 */
+    /* USER CODE END usart3 */
+};
+
+&usart6{
+    pinctrl-names = "default";
+    pinctrl-0 = <&usart6_pins_mx>;
+    status = "okay";
+
+    /* USER CODE BEGIN usart6 */
+    /* USER CODE END usart6 */
+};
+
 /* USER CODE BEGIN addons */
+&pwr {
+	system_suspend_supported_soc_modes = <
+		STM32_PM_CSLEEP_RUN
+		STM32_PM_CSTOP_ALLOW_LP_STOP
+		STM32_PM_CSTOP_ALLOW_STANDBY_DDR_SR
+	>;
+
+	system_off_soc_mode = <STM32_PM_CSTOP_ALLOW_STANDBY_DDR_OFF>;
+};
 /* USER CODE END addons */
 
