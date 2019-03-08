@@ -15,7 +15,6 @@
 #include "stm32mp15-ddr.dtsi"
 #include "stm32mp157c-security.dtsi"
 
-
 /* USER CODE BEGIN includes */
 /* USER CODE END includes */
 
@@ -187,8 +186,8 @@ clocks {
         CLK_SPI45_DISABLED
         CLK_SPI6_DISABLED
         CLK_I2C46_CSI
-        CLK_SDMMC3_HCLK2
-        CLK_USBO_PLL4R
+        CLK_SDMMC3_DISABLED
+        CLK_USBO_USBPHY
         CLK_ADC_DISABLED
         CLK_CEC_DISABLED
         CLK_I2C12_PCLK1
