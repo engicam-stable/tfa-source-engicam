@@ -4,11 +4,14 @@
  * Author: STM32CubeMX code generation for STMicroelectronics.
  */
 
+/* MPU: 800Mhz */
+/* DDR: 1G */
+
 /dts-v1/;
 #include <dt-bindings/clock/stm32mp1-clksrc.h>
 #include <dt-bindings/power/stm32mp1-power.h>
 
-#include "stm32mp15-512-mx.h"
+#include "stm32mp15-1G-mx.h"
 
 #include "stm32mp157c.dtsi"
 #include "stm32mp157cac-pinctrl.dtsi"
@@ -20,7 +23,7 @@
 
 / {
 	model = "STMicroelectronics custom STM32CubeMX board";
-	compatible = "st,stm32mp157a-ugeast-512-mx", "st,stm32mp157a-ugeast-mx", "st,stm32mp157";
+	compatible = "st,stm32mp157a-ugeast-mx", "st,stm32mp157";
 
 	/* USER CODE BEGIN root */
 
@@ -209,8 +212,8 @@ clocks {
         CLK_LPTIM23_DISABLED
         CLK_LPTIM45_DISABLED
     >;
-    pll1:st,pll@0 {
-        cfg = < 1 53 0 1 1 1>;
+    pll1:st,pll@0 { /* MPU = 800MHz */
+        cfg = < 1 65 0 1 1 1>;
     };
     pll2:st,pll@1 {
         cfg = < 1 43 1 0 0 7>;
@@ -313,7 +316,7 @@ clocks {
 &usart1{
     pinctrl-names = "default";
     pinctrl-0 = <&usart1_pins_mx>;
-    status = "okay";
+	status = "okay";
 
     /* USER CODE BEGIN usart1 */
     /* USER CODE END usart1 */
