@@ -26,8 +26,8 @@
 
 	aliases {
 		serial0 = &uart4;
-		serial1 = &usart3;
-		serial2 = &uart7;
+		serial1 = &usart1;
+		serial2 = &usart3;
 	};
 
 	chosen {
@@ -188,7 +188,7 @@ clocks {
         CLK_SPI45_DISABLED
         CLK_SPI6_DISABLED
         CLK_I2C46_CSI
-        CLK_SDMMC3_DISABLED
+        CLK_SDMMC3_HCLK2
         CLK_USBO_USBPHY
         CLK_ADC_PLL4R
         CLK_CEC_DISABLED
@@ -196,7 +196,7 @@ clocks {
         CLK_I2C35_DISABLED
         CLK_UART1_HSI
         CLK_UART24_HSE
-        CLK_UART35_DISABLED
+        CLK_UART35_PCLK1
         CLK_UART6_DISABLED
         CLK_UART78_DISABLED
         CLK_SPDIF_DISABLED
@@ -250,6 +250,7 @@ clocks {
     DECPROT(STM32MP1_ETZPC_I2C4_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
     DECPROT(STM32MP1_ETZPC_I2C6_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
     DECPROT(STM32MP1_ETZPC_FMC_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
+    DECPROT(STM32MP1_ETZPC_SDMMC3_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
 
     /*Restriction: following IDs are not managed - please to use User-Section if needed:
      STM32MP1_ETZPC_DMA1_ID, STM32MP1_ETZPC_DMA2_ID, STM32MP1_ETZPC_DMAMUX_ID,
